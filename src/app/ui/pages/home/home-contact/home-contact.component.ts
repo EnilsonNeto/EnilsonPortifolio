@@ -64,7 +64,6 @@ export class HomeContactComponent implements OnInit {
     public dialog: MatDialog) {
 
     this._mFormGroup = this.formBuilder.group({
-      // purpose: [''],
       name: ['', Validators.required],
       email: ['', Validators.email],
       details: ['', Validators.required],
@@ -94,18 +93,11 @@ export class HomeContactComponent implements OnInit {
 
   _onSubmit(): void {
     this._mInProgress = true;
- 
     this.openProgress();
     const value = this._mFormGroup.getRawValue();
-    // value.fromUrl = this.previousRoute;
-    // value.source = "Thedroid";
-    // console.log("onSubmit Contact: ", value);
     setTimeout(() => {
-      // console.log("sd");
-      
       this.recaptchaV3Service.execute("importantAction").subscribe(token => {
         this._resolvedCaptcha(token, value);
-        // this.addContact(value);
       });
     }, 100);
   }
@@ -119,26 +111,18 @@ export class HomeContactComponent implements OnInit {
     if (token) {
    
       time = new Date().valueOf();
-      // console.log("time2: ", time);
       console.log("value from resolved:", token);
       this.addContact(value);
       
     } else {
       this.closeProgress();
     }
-    // console.log("captcha: ", $event);
   }
 
   addContact(data: ParamPostContact) {
     
     this.apiContactService.add(data).subscribe({
       next :  (res: ParamPostContact) => {
-          // console.log("contact res is: ", res);
-          // if (res) {
-          //   this.snackBar.open("Contact query successfully send!", null, {
-          //     duration: 4000
-          //   });
-          // }
           this.resetForm();
           this.closeProgress();
           this.openSuccess();
@@ -146,7 +130,6 @@ export class HomeContactComponent implements OnInit {
 
       error: (error) => {
         console.error(error);
-        // this.snackBar.open(error.message, null, { duration: 4000 });
         this.closeProgress();
       },
     }

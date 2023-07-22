@@ -8,7 +8,7 @@ import { ContainerModule } from './ui/container/container.module';
 import { SharedModule } from './ui/@shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiModule } from './api/api.module';
-
+import { MatMenuModule } from '@angular/material/menu';
 @NgModule({
   declarations: [
     AppComponent
@@ -20,7 +20,8 @@ import { ApiModule } from './api/api.module';
     BrowserAnimationsModule,
     SharedModule,
     ContainerModule,
-    ApiModule
+    ApiModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

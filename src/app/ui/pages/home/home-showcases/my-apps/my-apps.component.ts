@@ -20,52 +20,63 @@ export class MyAppsComponent implements OnInit {
 
 
   _mApps : AppType[] = [
-
-    {
-     "id": "5131",
-     "name": "Sensify: Phone Sensors Plots",
-     "image": "assets/img/apps/sensify.webp",
-     "link": "https://play.google.com/store/apps/details?id=io.sensify.sensor",
-     "tab": "Android",
-     "caption": "In Jetpack Compose -",
+   {
+     "id": "5134",
+     "name": "Cycle Lins",
+     "image": "assets/img/apps/CycleLins.png",
+     "link": "https://cycle-lins.vercel.app/pagina-inicial",
+     "tab": "Web",
+     "caption": "Angular",
      "isFull": false,
-     "primary":"#3FD67D",
-     "background":"#E1E1E1"
+     "background":"#BD0000"
    },
    {
-     "id": "5132",
-     "name": "Taru: Plant Finder & Weather",
-     "image": "assets/img/apps/taru.webp",
-     "link": "https://play.google.com/store/apps/details?id=com.taru",
-     "tab": "Android",
+     "id": "5135",
+     "name": "Studio C&R",
+     "image": "assets/img/apps/Studiococer.png",
+     "link": "https://studio-ce-r.vercel.app/home",
+     "tab": "Web",
+     "caption": "Angular",
      "isFull": false,
-     "caption": "In Android -",
-     "background":"#F5E7B4"
+     "background":"#FC99C8"
    },
    {
-     "id": "5133",
-     "name": "Hundi: Record Book",
-     "image": "assets/img/apps/hundi.webp",
-     "link": "https://play.google.com/store/apps/details?id=com.hundi.social",
-     "tab": "Android",
-     "caption": "In Flutter -",
+     "id": "5136",
+     "name": "Meu Portifolio React",
+     "image": "assets/img/apps/Myport.png",
+     "link": "https://meu-portifolio-wheat.vercel.app/",
+     "tab": "Web",
+     "caption": "React",
      "isFull": true,
-     "background":"#3CE79F"
-   }
+     "background":"#960FFF"
+   },
+   {
+     "id": "5137",
+     "name": "Money E.S",
+     "image": "assets/img/apps/MoneyE.S.png",
+     "link": "https://money-e-s.vercel.app/",
+     "tab": "Web",
+     "caption": "React",
+     "isFull": false,
+     "background":"#6B00A1"
+   },
+   {
+     "id": "5138",
+     "name": "Buscador de CEP",
+     "image": "assets/img/apps/SearchCEP.png",
+     "link": "https://buscador-de-cep-kohl.vercel.app/",
+     "tab": "Web",
+     "caption": "React",
+     "isFull": false,
+     "background":"#CDCDCD"
+   },
+
   ];
 
   private destroyed$: ReplaySubject<boolean> = new ReplaySubject(1);
   mOnceAnimated = false
-
-  /* ********************************************************************************************
-    *                anims
-    */
   _mTriggerAnim?= 'false'
-
-
-
   _mThreshold = 0.4
-
 
   @ViewChild('animRefView') vAnimRefView?: ElementRef<HTMLElement>;
 
@@ -76,14 +87,10 @@ export class MyAppsComponent implements OnInit {
     private scroll: ScrollDispatcher, private viewPortRuler: ViewportRuler,
     private formBuilder: FormBuilder) {
 
-
-
   }
 
   ngOnInit(): void {
   }
-
-
 
   ngAfterViewInit(): void {
     this.setupAnimation();
@@ -96,17 +103,8 @@ export class MyAppsComponent implements OnInit {
   }
 
 
-
-
-  /* ***************************************************************************
-   *                                  other parts
-   */
-
-
   public setupAnimation() {
     if (!this.vAnimRefView) return;
-
-    // console.info("home products setupAnimation: " )
     this.scroll.ancestorScrolled(this.vAnimRefView, 100).pipe(
       // Makes sure to dispose on destroy
       takeUntil(this.destroyed$),
@@ -114,45 +112,29 @@ export class MyAppsComponent implements OnInit {
       map(() => {
         if (this.vAnimRefView != null) {
           var visibility = UiUtilsView.getVisibility(this.vAnimRefView, this.viewPortRuler)
-          // console.log("product app-item UiUtilsView visibility: ", visibility)
           return visibility;
         }
         return 0;
 
       }),
       scan<number, boolean>((acc: number | boolean, val: number) => (val >= this._mThreshold || (acc ? val > 0 : false))),
-      // Distincts the resulting triggers 
       distinctUntilChanged(),
       // Stop taking the first on trigger when aosOnce is set
       takeWhile(trigger => {
-        // console.info("app-item  !trigger || !this.mOnceAnimated",
-        //   !trigger || !this.mOnceAnimated)
-
         return !trigger || !this.mOnceAnimated
       }, true),
       switchMap(trigger => new Observable<number | boolean>(observer => this._ngZone.run(() => observer.next(trigger))))
     ).subscribe(val => {
 
-
-      // console.log("home-item setupAnimation ancestorScrolled: ", val)
-
       if (this.mOnceAnimated) {
         return;
       }
-
       if (val) {
-        // console.log("HomeProductsComponent setupAnimation setupAnimation ancestorScrolled: ", val)
-
         this.mOnceAnimated = true
         this._mTriggerAnim = 'true'
         this.cdr.detectChanges()
       }
-      // if (this.vImageArea != null) {
-      //   var visibility = UiUtilsView.getVisibility(this.vImageArea, this.viewPortRuler)
-      //   console.log("UiUtilsView visibility: ", visibility)
-      // }
     }
-
     )
   }
 }

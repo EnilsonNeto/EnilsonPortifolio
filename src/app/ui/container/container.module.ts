@@ -8,7 +8,7 @@ import { RouterModule } from '@angular/router';
 import { WidgetWaterfallModule } from '../widgets/widget-waterfall/widget-waterfall.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { SharedModule } from '../@shared/shared.module';
-
+import { MatMenuModule } from '@angular/material/menu';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,8 @@ import { SharedModule } from '../@shared/shared.module';
     RouterModule,
     MatDialogModule,
     WidgetWaterfallModule,
-    SharedModule
+    SharedModule,
+    MatMenuModule
   ],
   exports:[
     MainContainerComponent,
